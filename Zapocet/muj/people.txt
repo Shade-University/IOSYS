@@ -1,0 +1,35 @@
+1	B. J.
+3	LaRoche
+2	Taub
+3	Lisbon
+3	Bertram
+1	Henry
+2	House
+3	Fischer
+2	Chase
+2	Wilson
+2	Cameron
+3	Rigsby
+1	Margaret
+1	Maxwell
+3	Cho
+3	Wylie
+1	John
+1	Sherman
+1	Charles
+1	Frank
+2	Cuddy
+1	Trapper
+1	Hawkeye
+2	Kutner
+2	Foreman
+3	Jane
+3	Vega
+1	Radar
+2	Masters
+2	Volakis
+3	Hightower
+1	Sidney
+2	Thirteen
+3	Abbott
+3	Van Pelt
