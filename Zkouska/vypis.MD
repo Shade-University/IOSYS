@@ -4,33 +4,36 @@
 
 ### **a) Dvě základní funkce OS (s vysvětlením) 2**
 
-Virtualizace - pohled shora  
+Rozšíření stroje (virtualizace) - pohled shora  
 
 * Zjednodušující interface, abstrakce  
 * Příklad: čtení/zápis na disk
 
 Správa prostředků - pohled zdola  
 
-* Procesy, pamět, V/V zařízení  
+* Procesy, paměti, V/V zařízení  
 * Příklad: tisk na tiskárně
 * Multiplexing - sdílenení prostředků v čase (CPU) a v prostoru (RAM)
 
 ### **b) Vlastnosti moderního OS 4**
 
-* Preemptivní plánování procesů  
+* Preemptivní a efektivní plánování procesů  
 * Izolace procesů  
-* Efektivní správa paměti  
-* Izolace uživatelů  
-* Podpora IPC
+* Efektivní správa paměti
+ * Operační pamět - logické adresování, virtualizace
+ * Úložiště - souborové systémy 
+* Izolace uživatelů, víceuživatelský OS
+ * Implementace oprávnění
+* Podpora IPC - komunikace a synchronizace
 
 ### **c) Typy OS (alespoň šest) 3**
 
-* Mainframe OS  
+* Mainframe OS - sálové počítače 
 * Serverové OS
-* Clustery  
-* Osobní OS  
-* Realtime OS  
-* Vestavěné  
+* Vícepočítačové OS - Clustery  
+* Osobní OS - PC
+* Realtime OS
+* Vestavěné (embedded) OS
 * Smart Cart OS
 
 ### **d) Reprezentace abstrakcí (koncepcí) v OS a definice systémového volání 2**
@@ -68,15 +71,21 @@ Ostatní (práva, signály)
 
 ### **a) Definice monolitického jádra OS 2**
 
-Je to vnitřně nečleněné jádro - všechno běží v jednom paměťovém prostoru
+Je to vnitřně nečleněné jádro - všechno běží v jednom paměťovém prostoru  
+
+* Každá funkce (procedura) může volat libovolnou jinou
+* Procedury mají pevně definované rozhraní  
+* Do této kategorie patří unixové systémy, Linux, Windows.
 
 ### **b) Definice vrstveného jádra OS a čím se liší od monolitického s vnitřní strukturou vrstev 2**
 
-Jádro, které smí volat procedury stejné nebo nejbližší nižší vrstvy.
+Jádro je rozděleno na oddělené vrstvy  
+Smí volat procedury stejné nebo nejbližší nižší vrstvy.  (rozdíl od monolitického)
 
 ### **c) Definice mikrojádra OS a které funkce zajišťuje 3**
 
-Velmi malé jádro, které obsahuje jen nejzákladnější funkce.
+Velmi malé jádro, které obsahuje jen nejzákladnější funkce.  
+Je trendem moderních systémů - snaží se být co nejjednodušší (zvyšuje přehlednost v kódu, snižuje riziko chyb programátora)  
 
 * Mikroprogramování
 * Zajištění ochrany paměti  
