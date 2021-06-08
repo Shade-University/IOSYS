@@ -68,11 +68,14 @@ Ostatní (práva, signály)
 
 ### **a) Definice monolitického jádra OS 2**
 
-Je to vnitřně nečleněné jádro - všechno běží v jednom paměťovém prostoru
+Je to vnitřně nečleněné jádro - všechno běží v jednom paměťovém prostoru  
+
+* Jádro má všechny potřebné funkce (procedury) - Každá funkce může volat libovolnou jinou
 
 ### **b) Definice vrstveného jádra OS a čím se liší od monolitického s vnitřní strukturou vrstev 2**
 
-Jádro, které smí volat procedury stejné nebo nejbližší nižší vrstvy.
+Jádro, které smí volat procedury stejné nebo nejbližší nižší vrstvy. Je rozděleno na oddělené vrstvy  
+Vrstva smí volat jen procedury stejné nebo nejbližší nižší vrstvy (rozdíl od monolitického)
 
 ### **c) Definice mikrojádra OS a které funkce zajišťuje 3**
 
@@ -88,7 +91,10 @@ Jsou řešeny v uživatelském prostoru jako běžné procesy.
 
 ### **e) Definice virtualizace na úrovni jádra OS s příkladem 3**
 
-Jedná se o virtuální stroje, které vytváří virtualizované prostřední mezi hw/sw a operačním systémem. Kontejnery
+Jedná se o virtuální stroje, které vytváří virtualizované prostřední mezi hw/sw a operačním systémem.  
+
+* Virtualizované jádro operačního systému izoluje samostatná prostředí (skupiny procesů) s vlastním administrátorem, přičemž jádro běží pouze jedenkrát
+Kontejnery
 
 * Solaris, FreeBSD, Linux Containers
 
@@ -118,27 +124,27 @@ Mikrojádro
 ### **b) Důvody náročnosti návrhu OS 5**
 
 * Rozsáhlost, komplexnost, složitost
-* Konkurence
-* Ochrana
+* Konkurence - Procesy soupeří o prostředky (kritické sekce)
+* Ochrana - izolace procesů a oprávnění
 * Sdílení dat a prostředků
 * Životnost
-* Obecnost použití
+* Obecnost použití - škálovatelnost použití
 * Přenositelnost
 * Kompatibilita
 
 ### **c) Principy vývoje OS 3**
 
-* Jednoduchost
-* Úplnost
-* Jednoduchost a úplnost
+* Jednoduchost - KISS (Keep it simple)
+* Úplnost - Os by měla dělat to co má, ale nic navíc
+* Efektivita - neefektivní vlastnost nemá cenu implementovat.
 
 ### **d) Způsoby zabezpečení procesů, dat na médiu a přenášených dat 3**
 
 Zabezpečení procesů
 
-* Domény ochrany
-* ACL - Access Control List
-* Capability - C-List
+* Domény ochrany - Stanovení domén a práv
+* ACL - Access Control List - Stanovení práv nad objekty pro uživatele
+* Capability - C-List - stanovení práv procesům
 * Firewally
 
 Zabezpečení dat na médiu
@@ -165,10 +171,11 @@ Pipeline je způsob zvýšení výkonu pomocí rozdělení instrukcí na nezávi
 * Spekulativní provádění instrukcí
 * Hyperthreading
 * Více jader
+* Paralelizace instrukcí
 
 ### **c) Přerušitelnost procesu, průběhu zpracování instrukce 2**
 
-NEVIM
+k přerušení procesu může dojít pouze na hranicích instrukcí
 
 ### **d) Přerušovací systém: účel, průběh přerušení 5**
 
@@ -186,20 +193,27 @@ Průběh:
 
 ### **a) Metoda 1 komunikace se vstupně-výstupním zařízením (neefektivní) 2**
 
-Přístup pomocí instrukcí CPU.
+Přístup pomocí instrukcí CPU.  
+
+* Zápis
+* Čtení (kontrola)
+* Pokračování
 
 ### **b) Metoda 2 komunikace se vstupně-výstupním zařízením (efektivnější) 2**
 
 Přístup pomocí instrukcí CPU s využitím přerušení.  
 
-* Po dokončení se generuje přerušení a pokračuje zápis.
+* Zápis
+* Prováděění jiných operací
+* Po dokončení přerušovací signál, který přeruší provádění jiných operací a může pokračovat v zápisu.
 
 ### **c) Metoda 3 komunikace se vstupně-výstupním zařízením (nejefektivnější) 3**
 
 Direct Memory Access (DMA) s využitím prerušení.
 
-* Zápis adresy v RAM do V/V
-* Po dokončení nastane přerušení a obsluha
+* Zápis
+* Provádění jiných operací
+* Po dokončení přerušovací signál, který přeruší jiné operaci a přenos je dokončen
 
 ### **d) Definice paměti cache 2**
 
@@ -207,15 +221,20 @@ Jedná se o velmi rychlou pamět (mezipaměť) procesoru
 
 ### **e) Důvod existence konceptu paměti cache 1**
 
-Pamět RAM je pomalá a brzdí CPU - proto má každý CPU svou paměť cache.
+Pamět RAM je pomalá (a drahá) a brzdí CPU - proto má každý CPU svou paměť cache.
 
 ### **f) Důvod efektivity používání cache 2**
 
-Do paměti cache se ukládá část dat procesu - procesor pak nemusí čekat na pomalou RAM
+Princip lokality odkazů.
+
+* Proces má tendenci přistupovat ke stejné části paměti jako v předcházejícím čase
 
 ### **g) Výpočet střední přístupové doby do paměti 3**
 
 Ts = Tc + (1 − HR) ∙ Top(Tc ≪ Top)
+
+* Tc - přístupová doba do paměti cache
+* Top - přístupová doba do paměti
 
 ## 6) **Požadavky OS na HW nutný pro jeho implementaci: zejména na procesor, správu a adresování paměti. Registry CPU**
 
@@ -279,6 +298,9 @@ Proces - Instance programu v paměti
 
 ### **c) Průběh přepnutí kontextu 3**
 
+Uložení kontextu (Obvykle do PCB)  
+Kód je vykonáván dokud nedojde k přerušovacímu signálu (HW - časovač)  
+Přeskočení na obslužnou rutinu (do jádra OS - plánovač)  
 Uložení kontextu  
 Obsluha ovladače v jádře  
 Plánovač rozhoduje, který proces poběží
@@ -320,8 +342,9 @@ D - nepřerušitelný
 
 ### **d) Posixové signály, možnosti jejich zpracování a příklady 3**
 
-Jsou to jednoduché zprávy, pouze pro posixové signály. Implicitně je posílá OS při daných událostech.  
-Zpracování - Ukončení, pozastavení, pokračování
+Jednoduché zprávy procesům, které jsou zpracovány jádrem  
+Implicitně jsou posílány jádrem OS při určitých událostech, explicitně se posílají příkazem  
+Jsou zpracovány typicky jako ukončení procesu, pozastavení procesu. pokračování pozastaveného procesu
 
 * SIGINT - exit - ukončení (ctrl+c)
 * SIGSTP - stop - pozastavení (ctrl+z)
@@ -332,7 +355,7 @@ Zpracování - Ukončení, pozastavení, pokračování
 
 ### **a) Motivace zavedení vláken 1**
 
-Jednodušší a rychlejší správa + kvaziparalelismus
+Zvýšení výkonu a zjednodušení programování
 
 ### **b) Společné a samostatné položky metadat procesů/vláken 3**
 
@@ -400,9 +423,9 @@ Režimy:
 
 Obecně
 
-* Spravedlnost
-* Dodržování strategie
-* Efektivní využití zdrojů
+* Spravedlnost - každý proces stejně času
+* Dodržování strategie - na různých systémech může být jiná
+* Efektivní využití zdrojů - snaha optimalizovat výkon
 
 Dle OS
 
